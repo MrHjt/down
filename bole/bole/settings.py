@@ -39,10 +39,11 @@ ROBOTSTXT_OBEY = False
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
+DEFAULT_REQUEST_HEADERS = {
+  # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  # 'Accept-Language': 'en',
+    'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0",
+}
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
@@ -65,10 +66,10 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'bole.pipelines.MysqlPipeline': 1,
+    'bole.pipelines.MysqlTwistedPipline': 1,
    # 'bole.pipelines.BolePipeline': 300,
     # 'scrapy.pipelines.images.ImagesPipeline':1,
-    'bole.pipelines.ArticleImagePipeline': 2,
+    # 'bole.pipelines.ArticleImagePipeline': 2,
     # 'bole.pipelines.JsonWithEncodeingPiepline': 2,
 }
 #images_urls_field
@@ -103,4 +104,6 @@ MYSQL_USER="root"
 MYSQL_DBNAME="scrapy"
 MYSQL_PASSWORD="123456"
 
+SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+SQL_DATE_FORMAT = "%Y-%m-%d"
 
