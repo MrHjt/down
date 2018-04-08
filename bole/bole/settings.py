@@ -53,9 +53,12 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'bole.middlewares.BoleDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   'bole.middlewares.RandomUserAgentMiddleware': 543,
+     # 'bole.middlewares.RandomIpMiddleware': 500,
+    'scrapy.contrib.spidermiddleware.offsite.OffsiteMiddleware': None,
+      'bole.middlewares.JSPageMiddleware': 1,
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -106,4 +109,6 @@ MYSQL_PASSWORD="123456"
 
 SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 SQL_DATE_FORMAT = "%Y-%m-%d"
+
+RANDOM_UA_TYPE="random"
 

@@ -6,6 +6,13 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from fake_useragent import UserAgent
+import requests
+from selenium import webdriver
+from time import sleep
+
+
+# from bole.tools.xici_spider import GetIp
 
 
 class BoleSpiderMiddleware(object):
@@ -101,3 +108,47 @@ class BoleDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class RandomUserAgentMiddleware(object):
+    #随机获取user_aget
+    def __init__(self,crawler):
+        super(RandomUserAgentMiddleware,self).__init__();
+        self.ua=UserAgent();
+        self.ua_type=crawler.settings.get("RANDOM_UA_TYPE","random")
+
+
+    @classmethod
+    def from_crawler(cls,crawler):
+        return cls(crawler);
+
+
+    def process_request(self,request,spider):
+        def get_ua():
+            return getattr(self.ua,self.ua_type);
+        random_type=get_ua()
+        request.headers.setdefault('User-Agent',get_ua());
+        # request.meta["proxy"]="https://183.159.91.93:18118"
+# class RandomIpMiddleware(object):
+#
+#     def process_request(self,request,spider):
+#         get_ip=GetIp();
+#         request.meta["proxy"]=get_ip.get_random_ip();
+
+from scrapy.http import HtmlResponse
+class JSPageMiddleware(object):
+
+    # def __init__(self):
+    #      self.browser=webdriver.Chrome(executable_path="D:/_scrapy/chromedriver.exe");
+    #      super(JSPageMiddleware,self).__init__();
+
+
+    def process_request(self,request,spider):
+        if spider.name == "jobbole":
+            self.browser.get(request.url);
+            sleep(3);
+            print("访问：{0}".format(request.url));
+            return HtmlResponse(url=spider.browser.current_url,body=spider.browser.page_source,encoding="utf-8",request=request);
+
+
+

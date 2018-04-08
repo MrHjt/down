@@ -5,7 +5,9 @@ import re
 import datetime
 from urllib import parse
 from scrapy.loader import ItemLoader
-
+from selenium import webdriver
+from scrapy import signals
+from scrapy.xlib.pydispatch import dispatcher
 
 from bole.items import JobbleArticleItem,ArticleItemLoader
 from bole.utils.comment import get_md5
@@ -14,6 +16,17 @@ class JobboleSpider(scrapy.Spider):
     name = 'jobbole'
     allowed_domains = ['blog.jobbole.com']
     start_urls = ['http://blog.jobbole.com/all-posts/']
+
+    def __init__(self):
+        self.browser=webdriver.Chrome(executable_path="D:/_scrapy/chromedriver.exe");
+        super(JobboleSpider,self).__init__();
+        dispatcher.connect(self.spider_close,signals.spider_closed)
+
+
+    def spider_close(self,spider):
+        self.browser.quit();
+
+
 
     def parse(self, response):
 
