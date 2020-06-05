@@ -9,7 +9,7 @@ constantly==15.1.0
 cryptography==2.1.4
 cssselect==1.0.3
 diff-match-patch==20121119
-Django==1.11.9
+Django==1.11.29
 django-crispy-forms==1.7.0
 django-formtools==2.1
 django-import-export==0.7.0
